@@ -16,6 +16,12 @@ const discussionsController = {
       return res.status(200).json(...filtered);
     }
   },
+  addDiscussion: (req, res) => {
+    const { newData } = req.body;
+    discussionsData.unshift(newData); // 맨 처음에 새로운 데이터 추가
+
+    return res.status(201).json(newData);
+  },
 };
 
 module.exports = {
