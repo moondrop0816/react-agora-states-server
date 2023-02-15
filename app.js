@@ -6,7 +6,7 @@ const morgan = require("morgan"); // logger middleware
 
 app.use(morgan("tiny"));
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ strict: false }));
 
 const port = 4000;
 const discussionsRouter = require("./router/discussions");

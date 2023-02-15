@@ -1,5 +1,5 @@
 const { agoraStatesDiscussions } = require("../repository/discussions");
-const discussionsData = agoraStatesDiscussions;
+let discussionsData = agoraStatesDiscussions;
 
 const discussionsController = {
   findAll: (req, res) => {
@@ -17,10 +17,24 @@ const discussionsController = {
     }
   },
   addDiscussion: (req, res) => {
-    const { newData } = req.body;
+    const newData = req.body;
     discussionsData.unshift(newData); // 맨 처음에 새로운 데이터 추가
 
     return res.status(201).json(newData);
+  },
+  deleteDiscussion: (req, res) => {
+    const idx = discussionsData.findIndex(
+      (data) => data.id === Number(req.params.id)
+    ); // 파라미터의 id 와 일치하는 데이터의 인덱스 찾기
+
+    if (idx !== -1) {
+      // 인덱스가 있으면 = 삭제해야할 데이터가 존재하면
+      discussionsData.splice(idx, 1); // 데이터 배열에서 인덱스번째에서 1개 요소 제거 = 인덱스번째의 요소 제거
+      return res.status(204).send("resource deleted successfuly");
+    } else {
+      // 삭제해야할 데이터가 없으면 404 리턴
+      return res.status(404).send("Not found");
+    }
   },
 };
 
