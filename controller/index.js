@@ -36,6 +36,21 @@ const discussionsController = {
       return res.status(404).send("Not found");
     }
   },
+  updateDiscussion: (req, res) => {
+    const idx = discussionsData.findIndex(
+      (data) => data.id === Number(req.params.id)
+    );
+    const updatedData = {
+      ...discussionsData[idx],
+      ...req.body,
+    };
+
+    if (idx !== -1) {
+      discussionsData.splice(idx, 1, updatedData);
+    }
+
+    return res.status(200).send("resource updated successfuly");
+  },
 };
 
 module.exports = {
